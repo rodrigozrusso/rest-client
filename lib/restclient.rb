@@ -33,10 +33,11 @@ require File.dirname(__FILE__) + '/restclient/net_http_ext'
 #   # nest hash parameters
 #   RestClient.post 'http://example.com/resource', :nested => { :param1 => 'one' }
 #
-#   # POST and PUT with raw payloads
+#   # POST, PUT and DELETE with raw payloads
 #   RestClient.post 'http://example.com/resource', 'the post body', :content_type => 'text/plain'
 #   RestClient.post 'http://example.com/resource.xml', xml_doc
 #   RestClient.put 'http://example.com/resource.pdf', File.read('my.pdf'), :content_type => 'application/pdf'
+#   RestClient.delete 'http://example.com/resource.pdf', object.to_json, :content_type => 'application/json'
 #
 #   # DELETE
 #   RestClient.delete 'http://example.com/resource'
@@ -80,8 +81,12 @@ module RestClient
     Request.execute(:method => :put, :url => url, :payload => payload, :headers => headers, &block)
   end
 
-  def self.delete(url, headers={}, &block)
-    Request.execute(:method => :delete, :url => url, :headers => headers, &block)
+  def self.delete(url, payload = nil, headers={}, &block)
+    if payload
+      Request.execute(:method => :delete, :url => url, :payload => payload, :headers => headers, &block)
+    else
+      Request.execute(:method => :delete, :url => url, :headers => headers, &block)
+    end
   end
 
   def self.head(url, headers={}, &block)

@@ -1,3 +1,7 @@
+# 1.6.8
+
+- Add suport to content in delete operation.
+
 # 1.6.7
 
 - rebuild with 1.8.7 to avoid https://github.com/rubygems/rubygems/pull/57

@@ -23,8 +23,14 @@ describe RestClient do
     end
 
     it "DELETE" do
+      # RestClient::Request.should_receive(:execute).with(:method => :delete, :url => 'http://some/resource', :headers => {})
       RestClient::Request.should_receive(:execute).with(:method => :delete, :url => 'http://some/resource', :headers => {})
       RestClient.delete('http://some/resource')
+    end
+
+    it "DELETE-WITH-PAYLOAD" do
+      RestClient::Request.should_receive(:execute).with(:method => :delete, :url => 'http://some/resource', :payload => 'payload', :headers => {}, :payload => 'payload')
+      RestClient.delete('http://some/resource', 'payload')
     end
 
     it "HEAD" do
